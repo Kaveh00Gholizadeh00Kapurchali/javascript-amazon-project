@@ -25,7 +25,7 @@ const products = [{
 },
 
 {
-    image : "mages/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
+    image : "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
 
     name:"Adults Plain Cotton T-Shirt - 2 Pack",
 
@@ -35,7 +35,21 @@ const products = [{
     },
 
     priceCents: 799
-}];
+},
+
+{
+    image : "images/products/black-2-slot-toaster.jpg",
+
+    name:"2 Slot Toaster - Black",
+
+    rating: {
+        stars: 5,
+        count: 2197
+    },
+
+    priceCents: 1899
+},
+];
 
 
 let productsHTML = '';
