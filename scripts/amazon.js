@@ -28,7 +28,7 @@ products.forEach((product) => {
             </div>
 
             <div class="product-quantity-container ">
-                <select class='js-quality-selector-${product.id}'>
+                <select class="js-quantity-selector-${product.id}">
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -58,23 +58,13 @@ products.forEach((product) => {
 });
 
 
-document.querySelector('.js-product-grid').innerHTML = productsHTML;
-
-document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
-
-    button.addEventListener('click', () => {
-        const quantitySelector = document.querySelector('js-quantity-selector-${product.id}');
-
-        const quantity = number(quantitySelector.value);    
-
-
-        const productId = button.dataset.productId;
-
+function addToCart(productID){
+    
         let matchingItem;
 
       
         cart.forEach((item) => {
-            if (productId === item.productId) {
+            if (productID === item.productId) {
                 matchingItem = item;
             } 
         }); 
@@ -84,17 +74,37 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
             matchingItem.quantity += 1;
         } else {
             cart.push({
-                productId: productId,
+                productId: productID,
                 quantity: 1 
             }); 
-        } 
+        }
+}
+
+
+document.querySelector('.js-product-grid').innerHTML = productsHTML;
+
+document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
+
+    button.addEventListener('click', () => {
+        
+        const productId = button.dataset.productId;
+
+        const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
+
+        const quantity = Number(quantitySelector.value);    
+
+
+        
+
+        addToCart(productId);
+        
         let cartQuantity = 0 ;
 
         cart.forEach((item) => {
-            cartQuantity =+ item.quantity;
+            cartQuantity += item.quantity;
         });
 
-        document.querySelector('js-cart-quantity').innerHTML = cartQuantity
+        document.querySelector('.js-cart-quantity').innerHTML = cartQuantity
 
     });
 });
