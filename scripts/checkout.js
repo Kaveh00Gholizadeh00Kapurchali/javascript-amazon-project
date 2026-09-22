@@ -115,6 +115,20 @@ document.querySelectorAll('.js-delete-link').forEach((link) => {
 
     });
 
+    function updateCartQuantity(){
+
+         let cartQuantity = 0 ;
+
+        cart.forEach((item) => {
+            cartQuantity += item.quantity;
+        });
+
+        const checkoutQuantity = document.querySelector('.js-checkout-quantity');
+
+        checkoutQuantity.innerHTML = `${cartQuantity} items`
+}
+
+updateCartQuantity();
     
 
 });
