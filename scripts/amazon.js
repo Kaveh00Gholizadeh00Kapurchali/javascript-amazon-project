@@ -1,5 +1,6 @@
 import { cart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { addToCart } from "../data/cart.js";
 
 let productsHTML = '';
 
@@ -58,27 +59,7 @@ products.forEach((product) => {
 });
 
 
-function addToCart(productID){
-    
-        let matchingItem;
 
-      
-        cart.forEach((item) => {
-            if (productID === item.productId) {
-                matchingItem = item;
-            } 
-        }); 
-
-      
-        if (matchingItem) {
-            matchingItem.quantity += 1;
-        } else {
-            cart.push({
-                productId: productID,
-                quantity: 1 
-            }); 
-        }
-}
 
 function updateCartQuantity(){
 
