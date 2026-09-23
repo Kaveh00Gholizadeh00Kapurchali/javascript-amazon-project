@@ -61,3 +61,22 @@
     saveToStorage();
 
  }
+
+
+ export function updateCartQuantity(productId, newQuantity){
+     
+         let matchingItem;
+ 
+       
+         cart.forEach((item) => {
+             if (productId === item.productId) {
+                 matchingItem = item;
+             } 
+         }); 
+ 
+       
+         if (matchingItem) {
+             matchingItem.quantity = newQuantity;
+         }
+         saveToStorage();
+ }

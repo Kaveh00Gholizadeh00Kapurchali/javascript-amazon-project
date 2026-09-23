@@ -1,4 +1,4 @@
-import { cart , removeFromCart } from "../data/cart.js";
+import { cart , removeFromCart ,updateCartQuantity as updateCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 
 
@@ -41,10 +41,15 @@ cart.forEach((cartItem) => {
                     </div>
                     <div class="product-quantity">
                     <span>
-                        Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                        Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
                     </span>
-                    <span class="update-quantity-link link-primary">
+                    <span class="update-quantity-link  link-primary js-update-link js-update-link-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                         Update
+                    </span>
+                    <input type="text" class="quantity-input js-quantity-input-${matchingProduct.id} is-hidden">
+                    <span class="save-quantity-link js-save-quantity-link
+                    js-save-quantity-link-${matchingProduct.id} is-hidden" data-product-id="${matchingProduct.id}">
+                        Save
                     </span>
                     <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                         Delete
@@ -115,7 +120,67 @@ document.querySelectorAll('.js-delete-link').forEach((link) => {
 
     });
 
-    function updateCartQuantity(){
+});
+
+document.querySelectorAll('.js-update-link').forEach((link) => {
+        link.addEventListener('click', () => {
+            const productId = link.dataset.productId;
+           
+            const updateButton = document.querySelector(`.js-update-link-${productId}`);
+            const inputButton = document.querySelector(`.js-quantity-input-${productId}`);
+            const saveButton = document.querySelector(`.js-save-quantity-link-${productId}`)
+
+
+            inputButton.classList.remove('is-hidden');
+            saveButton.classList.remove('is-hidden');
+            updateButton.classList.add('is-hidden');
+
+
+            const container = document.querySelector(
+            `.js-cart-item-container-${productId}`
+            );
+            container.classList.add('is-editing-quantity');            
+        })
+    });
+
+
+    document.querySelectorAll('.js-save-quantity-link').forEach((link) => {
+        link.addEventListener('click', () => {
+            const productId = link.dataset.productId;
+
+            const previousQuantity= document.querySelector(`.js-quantity-label-${productId}`);
+            const updateButton = document.querySelector(`.js-update-link-${productId}`);
+            const inputButton = document.querySelector(`.js-quantity-input-${productId}`);
+            const saveButton = document.querySelector(`.js-save-quantity-link-${productId}`)
+
+            const newQuantity = Number(inputButton.value) ;
+            if (newQuantity < 0 || newQuantity >= 1000) {
+            alert('تعداد باید عددی بین 0 تا 1000 باشد!');
+            return;
+            }else{
+                updateCart(productId,newQuantity);
+                previousQuantity.innerHTML = newQuantity;
+            }
+
+            updateCartQuantity();
+
+
+
+            inputButton.classList.add('is-hidden');
+            saveButton.classList.add('is-hidden');
+            updateButton.classList.remove('is-hidden');
+
+            
+            const container = document.querySelector(
+            `.js-cart-item-container-${productId}`
+            );
+            container.classList.remove('is-editing-quantity');  
+        });
+        
+    });
+
+
+ function updateCartQuantity(){
 
          let cartQuantity = 0 ;
 
@@ -129,6 +194,3 @@ document.querySelectorAll('.js-delete-link').forEach((link) => {
 }
 
 updateCartQuantity();
-    
-
-});
