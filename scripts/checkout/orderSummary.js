@@ -2,7 +2,7 @@ import { cart , removeFromCart ,updateCartQuantity as updateCart, updateDelivary
 import { products } from "../../data/products.js";
 import  dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import {deliveryOptions} from "../../data/deliveryOptions.js";
-
+import { rennderPaymentSummary } from "./paymentSummary.js";
 
 export function rennderOrderSummary () {
 
@@ -131,10 +131,11 @@ export function rennderOrderSummary () {
             container.remove();
             
             updateCartQuantity();
+            rennderPaymentSummary();
         });
     });
 
-    // دکمه آپدیت
+    // دنمایش دکمه آپدیت
     document.querySelectorAll('.js-update-link').forEach((link) => {
         link.addEventListener('click', () => {
             const productId = link.dataset.productId;
@@ -172,13 +173,16 @@ export function rennderOrderSummary () {
             }
 
             updateCartQuantity();
-
+            
             inputButton.classList.add('is-hidden');
             saveButton.classList.add('is-hidden');
             updateButton.classList.remove('is-hidden');
 
             const container = document.querySelector(`.js-cart-item-container-${productId}`);
             container.classList.remove('is-editing-quantity');  
+
+            rennderOrderSummary();
+
         });
     });
 
@@ -223,6 +227,7 @@ export function rennderOrderSummary () {
                 deliveryDateElement.innerHTML = `Delivery date: ${dateString}`;
             }
             rennderOrderSummary();
+            rennderPaymentSummary();
         });
     });
 }
