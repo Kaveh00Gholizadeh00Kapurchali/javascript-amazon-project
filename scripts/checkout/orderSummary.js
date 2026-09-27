@@ -6,8 +6,10 @@ import { rennderPaymentSummary } from "./paymentSummary.js";
 
 export function rennderOrderSummary () {
 
-
+    let checkoutHeaderHTMl = '';
     let cartSummaryHTMl = '';
+
+   
 
     cart.forEach((cartItem) => {
 
@@ -35,7 +37,12 @@ export function rennderOrderSummary () {
         const deliveryDate = today.add(deliveryDays, 'days');
         const dateString = deliveryDate.format('dddd, MMMM D');
 
+        
+
+
+
         cartSummaryHTMl += `
+            
             <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
                     <div class="delivery-date js-delivery-date-${matchingProduct.id}">
                         Delivery date: ${dateString}
@@ -118,7 +125,11 @@ export function rennderOrderSummary () {
         return html;
     }
 
+    updateCartQuantity();
+
     document.querySelector('.js-order-summary').innerHTML = cartSummaryHTMl;
+    
+    
 
 
     // حذف آیتم
@@ -186,18 +197,7 @@ export function rennderOrderSummary () {
         });
     });
 
-    function updateCartQuantity(){
-        let cartQuantity = 0;
-        cart.forEach((item) => {
-            cartQuantity += item.quantity;
-        });
-
-        const checkoutQuantity = document.querySelector('.js-checkout-quantity');
-        if (checkoutQuantity) {
-            checkoutQuantity.innerHTML = `${cartQuantity} items`;
-        }
-    }
-    updateCartQuantity();
+    
 
 
 
@@ -232,3 +232,24 @@ export function rennderOrderSummary () {
     });
 }
 
+
+
+
+
+
+export function updateCartQuantity(){
+        let cartQuantity = 0;
+        cart.forEach((item) => {
+            cartQuantity += item.quantity;
+        });
+
+        const checkoutQuantity = document.querySelectorAll('.js-checkout-quantity, .js-payment-items');
+
+        checkoutQuantity.forEach((element) => {
+            element.innerHTML = `${cartQuantity} items`
+        });
+        
+
+        return cartQuantity;
+    }
+    

@@ -2,6 +2,7 @@ import { cart } from "../../data/cart.js";
 import { products } from "../../data/products.js";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
 
+import { updateCartQuantity } from "./orderSummary.js";
 
 
 export function rennderPaymentSummary() {
@@ -65,7 +66,7 @@ export function rennderPaymentSummary() {
                 </div>
 
                 <div class="payment-summary-row">
-                    <div>Items (3):</div>
+                    <div class="js-payment-items">Items (${updateCartQuantity()}):</div>
                     <div class="payment-summary-money">$${totalProductPrice}</div>
                 </div>
 
