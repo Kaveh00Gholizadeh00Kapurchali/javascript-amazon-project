@@ -33,7 +33,10 @@ class Product {
   }
 }
 
+const date = new Date();
+date.toLocaleDateString();
 
+console.log(date.toLocaleTimeString());
 
 class clothing extends Product {
 
