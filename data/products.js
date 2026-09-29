@@ -27,9 +27,35 @@ class Product {
   getPrice(){
     return (this.priceCents / 100).toFixed(2);
   }
+
+  extraInfoHTML() {
+    return " ";
+  }
 }
 
 
+
+class clothing extends Product {
+
+  sizeChartLink;
+
+  constructor(productDetails){ 
+
+    super(productDetails);
+
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+  
+  extraInfoHTML() {
+    return `
+      <div class="product-size-chart">
+        <a href="${this.sizeChartLink}" target="_blank">
+          Size Chart
+        </a>
+      </div>
+    `;
+  }
+}
 
 export const products = [
   {
@@ -691,5 +717,10 @@ export const products = [
     ]
   }
 ].map((productDetails) => {
-  return new Product(productDetails);
+  if (productDetails.type === "clothing") {
+    return new clothing(productDetails);
+  }else {
+    return new Product(productDetails);
+  }
+  
 });
